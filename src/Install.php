@@ -34,13 +34,14 @@ class Install
         // 获取项目根目录
         $baseDir = base_path();
 
-        // 输出调试信息
+        // 输出调试信息，确保路径正确
         echo "Base path calculated as: $baseDir\r\n";
 
         foreach (static::$pathRelation as $source => $dest) {
             // 获取源文件的绝对路径
             $sourceFile = realpath(__DIR__ . '/../src/' . $source);
-            // 目标文件的绝对路径
+
+            // 拼接目标文件的绝对路径
             $destPath = $baseDir . DIRECTORY_SEPARATOR . $dest;
 
             // 输出调试信息，确保路径正确
