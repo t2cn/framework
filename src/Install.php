@@ -48,7 +48,7 @@ class Install
             }
 
             // 移动文件
-            static::moveFile($sourceFile, $destPath);
+            static::moveFile($sourceFile, $destPath, $dest);
         }
     }
 
@@ -56,20 +56,21 @@ class Install
      * 移动文件的功能
      * @param string $sourceFile 源文件路径
      * @param string $destPath 目标文件路径
+     * @param string $dest 文件名称，用于输出
      * @return void
      */
-    protected static function moveFile(string $sourceFile, string $destPath): void
+    protected static function moveFile(string $sourceFile, string $destPath, string $dest): void
     {
         // 如果目标文件已存在，可以选择覆盖或重命名
         if (file_exists($destPath)) {
-            echo "Destination file $destPath already exists. Overwriting...\r\n";
+            return;
         }
 
         // 执行移动操作
         if (rename($sourceFile, $destPath)) {
-            echo "File $sourceFile moved to $destPath successfully.\r\n";
+            echo "Create $dest\r\n";  // 成功时输出 Create 文件名
         } else {
-            echo "Failed to move $sourceFile to $destPath.\r\n";
+            echo "Create $dest fail\r\n";  // 成功时输出 Create 文件名
         }
     }
 }
