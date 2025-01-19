@@ -34,9 +34,6 @@ class Install
         // 获取正确的目标基础目录
         $baseDir = dirname(__DIR__, 4); // 通过调整 dirname 回溯到 t2engine 目录
 
-        // 输出调试信息，确保路径正确
-        echo "Base path calculated as: $baseDir\r\n";
-
         foreach (static::$pathRelation as $source => $dest) {
             // 获取源文件的绝对路径
             $sourceFile = realpath(__DIR__ . '/../src/' . $source);
@@ -44,28 +41,35 @@ class Install
             // 拼接目标文件的绝对路径
             $destPath = $baseDir . DIRECTORY_SEPARATOR . $dest;
 
-            // 输出调试信息，确保路径正确
-            echo "Source file: $sourceFile\r\n";
-            echo "Destination path: $destPath\r\n";
-
             // 检查源文件是否存在
             if (!$sourceFile || !file_exists($sourceFile)) {
                 echo "Source file $sourceFile does not exist.\r\n";
                 continue;
             }
 
-            // 确保目标目录存在
-            $destDir = dirname($destPath);
-            if (!is_dir($destDir)) {
-                mkdir($destDir, 0777, true);
-            }
+            // 移动文件
+            static::moveFile($sourceFile, $destPath);
+        }
+    }
 
-            // 复制文件
-            if (copy($sourceFile, $destPath)) {
-                echo "File $source copied to $destPath\r\n";
-            } else {
-                echo "Failed to copy $source to $destPath\r\n";
-            }
+    /**
+     * 移动文件的功能
+     * @param string $sourceFile 源文件路径
+     * @param string $destPath 目标文件路径
+     * @return void
+     */
+    protected static function moveFile(string $sourceFile, string $destPath): void
+    {
+        // 如果目标文件已存在，可以选择覆盖或重命名
+        if (file_exists($destPath)) {
+            echo "Destination file $destPath already exists. Overwriting...\r\n";
+        }
+
+        // 执行移动操作
+        if (rename($sourceFile, $destPath)) {
+            echo "File $sourceFile moved to $destPath successfully.\r\n";
+        } else {
+            echo "Failed to move $sourceFile to $destPath.\r\n";
         }
     }
 }
