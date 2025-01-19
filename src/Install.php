@@ -31,26 +31,29 @@ class Install
      */
     public static function installByRelation(): void
     {
-        // 计算主项目根目录（基于当前目录）
-        $basePath = realpath(__DIR__ . '/../../../'); // 定位到主项目根目录
-        echo "Base path calculated as: $basePath\r\n";
+        // 获取项目根目录
+        $baseDir = base_path();
+
+        // 输出调试信息
+        echo "Base path calculated as: $baseDir\r\n";
 
         foreach (static::$pathRelation as $source => $dest) {
-            // 源文件的绝对路径
-            $sourceFile = realpath(__DIR__ . DIRECTORY_SEPARATOR . $source);
+            // 获取源文件的绝对路径
+            $sourceFile = realpath(__DIR__ . '/../src/' . $source);
             // 目标文件的绝对路径
-            $destPath = $basePath . DIRECTORY_SEPARATOR . ltrim($dest, DIRECTORY_SEPARATOR);
+            $destPath = $baseDir . DIRECTORY_SEPARATOR . $dest;
 
-            // 输出调试信息
+            // 输出调试信息，确保路径正确
             echo "Source file: $sourceFile\r\n";
             echo "Destination path: $destPath\r\n";
 
+            // 检查源文件是否存在
             if (!$sourceFile || !file_exists($sourceFile)) {
                 echo "Source file $sourceFile does not exist.\r\n";
                 continue;
             }
 
-            // 确保目标目录存在 1
+            // 确保目标目录存在
             $destDir = dirname($destPath);
             if (!is_dir($destDir)) {
                 mkdir($destDir, 0777, true);
