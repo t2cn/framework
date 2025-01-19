@@ -31,8 +31,8 @@ class Install
      */
     public static function installByRelation(): void
     {
-        // 获取项目根目录
-        $baseDir = dirname(__DIR__, 5); // 直接使用 dirname 来获得根目录
+        // 获取正确的目标基础目录
+        $baseDir = dirname(__DIR__, 3); // 通过调整 dirname 回溯到 t2engine 目录
 
         // 输出调试信息，确保路径正确
         echo "Base path calculated as: $baseDir\r\n";
