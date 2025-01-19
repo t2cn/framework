@@ -46,22 +46,20 @@ class Twig implements ViewInterface
      * @param string $template
      * @param array $vars
      * @param string|null $app
-     * @param string|null $plugin
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function render(string $template, array $vars, ?string $app = null, ?string $plugin = null): string
+    public static function render(string $template, array $vars, ?string $app = null): string
     {
         static $views = [];
         $request      = request();
-        $plugin       = $plugin === null ? ($request->plugin ?? '') : $plugin;
         $app          = $app === null ? ($request->app ?? '') : $app;
-        $configPrefix = $plugin ? "plugin.$plugin." : '';
-        $viewSuffix   = config("{$configPrefix}view.options.view_suffix", 'html');
-        $baseViewPath = $plugin ? base_path() . "/plugin/$plugin/app" : app_path();
+        $viewSuffix   = config("view.options.view_suffix", 'html');
+        $baseViewPath = app_path();
 
+        // 如果指定的模板以 ‘/’ 开头
         if ($template[0] === '/') {
             $template = ltrim($template, '/');
             if (str_contains($template, '/view/')) {
@@ -71,12 +69,12 @@ class Twig implements ViewInterface
                 $viewPath = base_path();
             }
         } else {
-            $viewPath = $app === '' ? "$baseViewPath/view/" : "$baseViewPath/$app/view/";
+            $viewPath = "$baseViewPath/$app/view/";
         }
 
         if (!isset($views[$viewPath])) {
-            $views[$viewPath] = new Environment(new FilesystemLoader($viewPath), config("{$configPrefix}view.options", []));
-            $extension        = config("{$configPrefix}view.extension");
+            $views[$viewPath] = new Environment(new FilesystemLoader($viewPath), config("view.options", []));
+            $extension        = config("view.extension");
             if ($extension) {
                 $extension($views[$viewPath]);
             }
