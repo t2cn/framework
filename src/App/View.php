@@ -21,9 +21,9 @@ use function request;
 class View
 {
     /**
-     * Assign.
-     * @param mixed $name
-     * @param mixed $value
+     * Assign
+     * @param $name
+     * @param mixed|null $value
      * @return void
      */
     public static function assign($name, mixed $value = null): void

@@ -40,7 +40,8 @@
     "illuminate/pagination": "^11.38",
     "illuminate/events": "^11.38",
     "illuminate/redis": "^11.38",
-    "symfony/cache": "^7.2"
+    "symfony/cache": "^7.2",
+    "twig/twig": "^3.18"
   },
   "require-dev": {
     "ext-zend-opcache": "*",
