@@ -11,9 +11,7 @@ class Install
      * @var array
      */
     protected static array $pathRelation = [
-        'start.php'   => 'start.php',
-        'windows.php' => 'windows.php',
-        'windows.bat' => 'windows.bat',
+        'start.php' => 'start.php'
     ];
 
     /**
