@@ -28,7 +28,7 @@ use function ob_get_clean;
 use function ob_start;
 use function request;
 
-class ViewHandler implements ViewInterface
+class Raw implements ViewInterface
 {
     /**
      * Assign.

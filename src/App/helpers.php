@@ -16,10 +16,14 @@ declare(strict_types=1);
 use App\Container;
 use App\Route;
 use App\Translation;
+use App\View\Twig\Twig;
 use T2\App;
 use T2\Config;
 use T2\Request;
 use T2\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Workerman\Protocols\Http\Session;
 use Workerman\Worker;
 
@@ -239,6 +243,23 @@ if (!function_exists('view')) {
         [$template, $vars, $app, $plugin] = template_inputs($template, $vars, $app, $plugin);
         $handler = config($plugin ? "plugin.$plugin.view.handler" : 'view.handler');
         return new Response(200, [], $handler::render($template, $vars, $app, $plugin));
+    }
+}
+
+if (!function_exists('twig')) {
+    /**
+     * Twig view response
+     * @param string $template
+     * @param array $vars
+     * @param string|null $app
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    function twig(string $template, array $vars = [], string $app = null): Response
+    {
+        return new Response(200, [], Twig::render($template, $vars, $app));
     }
 }
 

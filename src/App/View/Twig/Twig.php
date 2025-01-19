@@ -28,7 +28,7 @@ use function config;
 use function is_array;
 use function request;
 
-class ViewHandler implements ViewInterface
+class Twig implements ViewInterface
 {
     /**
      * Assign.

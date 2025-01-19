@@ -19,7 +19,7 @@ use Exception;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class ReplaceString extends AbstractExtension
+class TwigReplaceString extends AbstractExtension
 {
     /**
      * 注册自定义 Twig 函数
