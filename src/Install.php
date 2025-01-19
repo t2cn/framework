@@ -32,7 +32,7 @@ class Install
     public static function installByRelation(): void
     {
         // 获取正确的目标基础目录
-        $baseDir = dirname(__DIR__, 3); // 通过调整 dirname 回溯到 t2engine 目录
+        $baseDir = dirname(__DIR__, 4); // 通过调整 dirname 回溯到 t2engine 目录
 
         // 输出调试信息，确保路径正确
         echo "Base path calculated as: $baseDir\r\n";
