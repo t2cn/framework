@@ -28,7 +28,7 @@ use function config;
 use function is_array;
 use function request;
 
-class View implements ViewInterface
+class ViewHandler implements ViewInterface
 {
     /**
      * Assign.
