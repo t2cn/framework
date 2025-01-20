@@ -28,9 +28,7 @@ class TwigReplaceString extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('static', [$this, 'getStaticPath']),
-            new TwigFunction('res', [$this, 'getResPath']),
-            new TwigFunction('common', [$this, 'getCommonPath']),
+            new TwigFunction('assets', [$this, 'getAssetsPath']),
             new TwigFunction('url', [$this, 'generateUrl']),
             new TwigFunction('csrf_token', [$this, 'csrf_token']),
         ];
@@ -41,29 +39,9 @@ class TwigReplaceString extends AbstractExtension
      * @param string $path
      * @return string
      */
-    public function getStaticPath(string $path = ''): string
+    public function getAssetsPath(string $path = ''): string
     {
-        return '/static/' . ltrim($path, '/');
-    }
-
-    /**
-     * 获取资源路径
-     * @param string $path
-     * @return string
-     */
-    public function getResPath(string $path = ''): string
-    {
-        return '/res/' . ltrim($path, '/');
-    }
-
-    /**
-     * 获取公共路径
-     * @param string $path
-     * @return string
-     */
-    public function getCommonPath(string $path = ''): string
-    {
-        return '/common/' . ltrim($path, '/');
+        return '/assets/' . ltrim($path, '/');
     }
 
     /**
