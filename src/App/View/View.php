@@ -13,7 +13,7 @@
  */
 declare(strict_types=1);
 
-namespace App;
+namespace App\View;
 
 use function config;
 use function request;
