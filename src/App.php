@@ -1166,18 +1166,19 @@ class App
     }
 
     /**
-     * LoadAllConfig.
+     * LoadAllConfig
      * @param array $excludes
      * @return void
      */
-    public static function loadAllConfig(array $excludes = [])
+    public static function loadAllConfig(array $excludes = []): void
     {
         Config::load(config_path(), $excludes);
-        $directory = base_path() . '/plugin';
+        // 加载多应用配置
+        $directory = base_path() . '/app';
         foreach (Util::scanDir($directory, false) as $name) {
             $dir = "$directory/$name/config";
             if (is_dir($dir)) {
-                Config::load($dir, $excludes, "plugin.$name");
+                Config::load($dir, $excludes, $name);
             }
         }
     }
