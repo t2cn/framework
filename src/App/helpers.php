@@ -675,34 +675,3 @@ if (!function_exists('dumpx')) {
         return $result;
     }
 }
-
-if (!function_exists('isFrameworkInstalled')) {
-    /**
-     * 检查本地项目
-     * @param array $haystack 要对比的数组
-     * @return bool
-     */
-    function isFrameworkInstalled(array $haystack): bool
-    {
-        $composerFilePath = base_path() . '/composer.json';
-        // 没有正确的 composer.json 文件
-        if (!file_exists($composerFilePath)) {
-            echo "composer.json not found. Cannot verify framework installation.\n";
-            dump('composer.json not found. Cannot verify framework installation.');
-            return false;
-        }
-        $composerContent = file_get_contents($composerFilePath);
-        // 读取 composer.json 文件失败
-        if ($composerContent === false) {
-            echo "Failed to read composer.json.\n";
-            return false;
-        }
-        $composerData = json_decode($composerContent, true);
-        // composer.json 格式无效
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            echo "Invalid composer.json format.\n";
-            return false;
-        }
-        return in_array($composerData['name'], $haystack, true);
-    }
-}
