@@ -171,12 +171,13 @@ if (!function_exists('json')) {
     /**
      * Json response
      * @param $data
+     * @param array $headers
      * @param int $options
      * @return Response
      */
-    function json($data, int $options = JSON_UNESCAPED_UNICODE): Response
+    function json($data, array $headers = [], int $options = JSON_UNESCAPED_UNICODE): Response
     {
-        return new Response(200, ['Content-Type' => 'application/json'], json_encode($data, $options));
+        return new Response(200, $headers, json_encode($data, $options));
     }
 }
 
@@ -654,7 +655,6 @@ if (!function_exists('url')) {
 if (!function_exists('dumpx')) {
     /**
      * 封装 dump 函数，追加调用行号信息
-     *
      * @param mixed ...$vars
      * @return mixed
      */
