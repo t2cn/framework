@@ -46,7 +46,9 @@ if (!defined('BASE_PATH')) {
 if (!function_exists('run_path')) {
     /**
      * return the program execute directory
+     *
      * @param string $path
+     *
      * @return string
      */
     function run_path(string $path = ''): string
@@ -62,10 +64,12 @@ if (!function_exists('run_path')) {
 if (!function_exists('base_path')) {
     /**
      * if the param $path equal false,will return this program current execute directory
-     * @param string|false $path
+     *
+     * @param false|string $path
+     *
      * @return string
      */
-    function base_path($path = ''): string
+    function base_path(false|string $path = ''): string
     {
         if (false === $path) {
             return run_path();
@@ -77,7 +81,9 @@ if (!function_exists('base_path')) {
 if (!function_exists('app_path')) {
     /**
      * App path
+     *
      * @param string $path
+     *
      * @return string
      */
     function app_path(string $path = ''): string
@@ -89,8 +95,10 @@ if (!function_exists('app_path')) {
 if (!function_exists('public_path')) {
     /**
      * Public path
-     * @param string $path
+     *
+     * @param string      $path
      * @param string|null $plugin
+     *
      * @return string
      */
     function public_path(string $path = '', ?string $plugin = null): string
@@ -115,7 +123,9 @@ if (!function_exists('public_path')) {
 if (!function_exists('config_path')) {
     /**
      * Config path
+     *
      * @param string $path
+     *
      * @return string
      */
     function config_path(string $path = ''): string
@@ -127,7 +137,9 @@ if (!function_exists('config_path')) {
 if (!function_exists('runtime_path')) {
     /**
      * Runtime path
+     *
      * @param string $path
+     *
      * @return string
      */
     function runtime_path(string $path = ''): string
@@ -143,8 +155,10 @@ if (!function_exists('runtime_path')) {
 if (!function_exists('path_combine')) {
     /**
      * Generate paths based on given information
+     *
      * @param string $front
      * @param string $back
+     *
      * @return string
      */
     function path_combine(string $front, string $back): string
@@ -156,9 +170,11 @@ if (!function_exists('path_combine')) {
 if (!function_exists('response')) {
     /**
      * Response
-     * @param int $status
-     * @param array $headers
+     *
+     * @param int    $status
+     * @param array  $headers
      * @param string $body
+     *
      * @return Response
      */
     function response(string $body = '', int $status = 200, array $headers = []): Response
@@ -170,9 +186,11 @@ if (!function_exists('response')) {
 if (!function_exists('json')) {
     /**
      * Json response
-     * @param $data
+     *
+     * @param       $data
      * @param array $headers
-     * @param int $options
+     * @param int   $options
+     *
      * @return Response
      */
     function json($data, array $headers = [], int $options = JSON_UNESCAPED_UNICODE): Response
@@ -184,7 +202,9 @@ if (!function_exists('json')) {
 if (!function_exists('xml')) {
     /**
      * Xml response
+     *
      * @param $xml
+     *
      * @return Response
      */
     function xml($xml): Response
@@ -199,8 +219,10 @@ if (!function_exists('xml')) {
 if (!function_exists('jsonp')) {
     /**
      * Jsonp response
-     * @param $data
+     *
+     * @param        $data
      * @param string $callbackName
+     *
      * @return Response
      */
     function jsonp($data, string $callbackName = 'callback'): Response
@@ -215,9 +237,11 @@ if (!function_exists('jsonp')) {
 if (!function_exists('redirect')) {
     /**
      * Redirect response
+     *
      * @param string $location
-     * @param int $status
-     * @param array $headers
+     * @param int    $status
+     * @param array  $headers
+     *
      * @return Response
      */
     function redirect(string $location, int $status = 302, array $headers = []): Response
@@ -233,10 +257,12 @@ if (!function_exists('redirect')) {
 if (!function_exists('view')) {
     /**
      * View response
-     * @param mixed $template
-     * @param array $vars
+     *
+     * @param mixed       $template
+     * @param array       $vars
      * @param string|null $app
      * @param string|null $plugin
+     *
      * @return Response
      */
     function view(mixed $template = null, array $vars = [], ?string $app = null, ?string $plugin = null): Response
@@ -250,9 +276,11 @@ if (!function_exists('view')) {
 if (!function_exists('twig')) {
     /**
      * Twig view response
-     * @param string $template
-     * @param array $vars
+     *
+     * @param string      $template
+     * @param array       $vars
      * @param string|null $app
+     *
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
@@ -267,9 +295,10 @@ if (!function_exists('twig')) {
 if (!function_exists('request')) {
     /**
      * Get request
+     *
      * @return Request|null
      */
-    function request()
+    function request(): ?Request
     {
         return App::request();
     }
@@ -278,11 +307,13 @@ if (!function_exists('request')) {
 if (!function_exists('config')) {
     /**
      * Get config
+     *
      * @param string|null $key
-     * @param mixed $default
+     * @param mixed       $default
+     *
      * @return mixed
      */
-    function config(?string $key = null, mixed $default = null)
+    function config(?string $key = null, mixed $default = null): mixed
     {
         return Config::get($key, $default);
     }
@@ -291,8 +322,10 @@ if (!function_exists('config')) {
 if (!function_exists('route')) {
     /**
      * Create url
+     *
      * @param string $name
-     * @param ...$parameters
+     * @param        ...$parameters
+     *
      * @return string
      */
     function route(string $name, ...$parameters): string
@@ -317,8 +350,10 @@ if (!function_exists('route')) {
 if (!function_exists('session')) {
     /**
      * Session
+     *
      * @param array|string|null $key
-     * @param mixed $default
+     * @param mixed             $default
+     *
      * @return mixed|bool|Session
      * @throws Exception
      */
@@ -350,10 +385,12 @@ if (!function_exists('session')) {
 if (!function_exists('trans')) {
     /**
      * Translation
-     * @param string $id
-     * @param array $parameters
+     *
+     * @param string      $id
+     * @param array       $parameters
      * @param string|null $domain
      * @param string|null $locale
+     *
      * @return string
      */
     function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
@@ -366,7 +403,9 @@ if (!function_exists('trans')) {
 if (!function_exists('locale')) {
     /**
      * Locale
+     *
      * @param string|null $locale
+     *
      * @return string
      */
     function locale(?string $locale = null): string
@@ -382,6 +421,7 @@ if (!function_exists('locale')) {
 if (!function_exists('not_found')) {
     /**
      * 404 not found
+     *
      * @return Response
      */
     function not_found(): Response
@@ -393,12 +433,14 @@ if (!function_exists('not_found')) {
 if (!function_exists('copy_dir')) {
     /**
      * Copy dir
+     *
      * @param string $source
      * @param string $dest
-     * @param bool $overwrite
+     * @param bool   $overwrite
+     *
      * @return void
      */
-    function copy_dir(string $source, string $dest, bool $overwrite = false)
+    function copy_dir(string $source, string $dest, bool $overwrite = false): void
     {
         if (is_dir($source)) {
             if (!is_dir($dest)) {
@@ -419,7 +461,9 @@ if (!function_exists('copy_dir')) {
 if (!function_exists('remove_dir')) {
     /**
      * Remove dir
+     *
      * @param string $dir
+     *
      * @return bool
      */
     function remove_dir(string $dir): bool
@@ -438,10 +482,11 @@ if (!function_exists('remove_dir')) {
 if (!function_exists('worker_bind')) {
     /**
      * Bind worker
+     *
      * @param $worker
      * @param $class
      */
-    function worker_bind($worker, $class)
+    function worker_bind($worker, $class): void
     {
         $callbackMap = [
             'onConnect',
@@ -468,11 +513,13 @@ if (!function_exists('worker_bind')) {
 if (!function_exists('worker_start')) {
     /**
      * Start worker
+     *
      * @param $processName
      * @param $config
+     *
      * @return void
      */
-    function worker_start($processName, $config)
+    function worker_start($processName, $config): void
     {
         if (isset($config['enable']) && !$config['enable']) {
             return;
@@ -515,7 +562,9 @@ if (!function_exists('worker_start')) {
 if (!function_exists('get_realpath')) {
     /**
      * Get realpath
+     *
      * @param string $filePath
+     *
      * @return false|string
      */
     function get_realpath(string $filePath): false|string
@@ -531,6 +580,7 @@ if (!function_exists('get_realpath')) {
 if (!function_exists('is_phar')) {
     /**
      * Is phar
+     *
      * @return bool
      */
     function is_phar(): bool
@@ -542,10 +592,12 @@ if (!function_exists('is_phar')) {
 if (!function_exists('template_inputs')) {
     /**
      * Get template vars
-     * @param mixed $template
-     * @param array $vars
+     *
+     * @param mixed       $template
+     * @param array       $vars
      * @param string|null $app
      * @param string|null $plugin
+     *
      * @return array
      */
     function template_inputs(mixed $template, array $vars, ?string $app, ?string $plugin): array
@@ -585,6 +637,7 @@ if (!function_exists('template_inputs')) {
 if (!function_exists('cpu_count')) {
     /**
      * Get cpu count
+     *
      * @return int
      */
     function cpu_count(): int
@@ -612,8 +665,10 @@ if (!function_exists('cpu_count')) {
 if (!function_exists('input')) {
     /**
      * Get request parameters, if no parameter name is passed, an array of all values is returned, default values is supported
-     * @param string|null $param param's name
-     * @param mixed $default default value
+     *
+     * @param string|null $param   param's name
+     * @param mixed       $default default value
+     *
      * @return mixed
      */
     function input(?string $param = null, mixed $default = null): mixed
@@ -625,6 +680,7 @@ if (!function_exists('input')) {
 if (!function_exists('enum_exists')) {
     /**
      * Enum exists.
+     *
      * @return bool
      */
     function enum_exists(): bool
@@ -636,8 +692,10 @@ if (!function_exists('enum_exists')) {
 if (!function_exists('url')) {
     /**
      * 生成URL
-     * @param string $name 路由名称
-     * @param array $param 路由参数
+     *
+     * @param string $name  路由名称
+     * @param array  $param 路由参数
+     *
      * @return string 生成的URL
      */
     function url(string $name = '', array $param = []): string
@@ -647,15 +705,20 @@ if (!function_exists('url')) {
         if ($route === '/') {
             return $route;
         }
-        // Apply rtrim to remove trailing slashes
-        return rtrim($route, '/');
+        // 移除大括号和其中的内容
+        $url = preg_replace('/\{.*?\}/', '', $route);
+
+        // 移除最后一个斜杠（如果有）
+        return rtrim($url, '/');
     }
 }
 
 if (!function_exists('dumpx')) {
     /**
      * 封装 dump 函数，追加调用行号信息
+     *
      * @param mixed ...$vars
+     *
      * @return mixed
      */
     function dumpx(mixed ...$vars): mixed
