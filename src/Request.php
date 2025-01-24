@@ -34,9 +34,9 @@ use const FILTER_VALIDATE_IP;
 class Request extends \Workerman\Protocols\Http\Request
 {
     /**
-     * @var string
+     * @var ?string
      */
-    public $plugin = null;
+    public ?string $plugin = null;
 
     /**
      * @var string
@@ -52,6 +52,13 @@ class Request extends \Workerman\Protocols\Http\Request
      * @var string
      */
     public $action = null;
+
+    /**
+     * 模板变量
+     *
+     * @var array
+     */
+    public array $_view_vars = [];
 
     /**
      * @var RouteObject
@@ -73,8 +80,10 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Input
+     *
      * @param string $name
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function input(string $name, mixed $default = null)
@@ -84,7 +93,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Only
+     *
      * @param array $keys
+     *
      * @return array
      */
     public function only(array $keys): array
@@ -101,7 +112,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Except
+     *
      * @param array $keys
+     *
      * @return mixed|null
      */
     public function except(array $keys)
@@ -115,7 +128,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * File
+     *
      * @param string|null $name
+     *
      * @return UploadFile|UploadFile[]|null
      */
     public function file(?string $name = null): array|null|UploadFile
@@ -145,7 +160,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * ParseFile
+     *
      * @param array $file
+     *
      * @return UploadFile
      */
     protected function parseFile(array $file): UploadFile
@@ -155,7 +172,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * ParseFiles
+     *
      * @param array $files
+     *
      * @return array
      */
     protected function parseFiles(array $files): array
@@ -173,6 +192,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * GetRemoteIp
+     *
      * @return string
      */
     public function getRemoteIp(): string
@@ -182,6 +202,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * GetRemotePort
+     *
      * @return int
      */
     public function getRemotePort(): int
@@ -191,6 +212,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * GetLocalIp
+     *
      * @return string
      */
     public function getLocalIp(): string
@@ -200,6 +222,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * GetLocalPort
+     *
      * @return int
      */
     public function getLocalPort(): int
@@ -209,7 +232,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * GetRealIp
+     *
      * @param bool $safeMode
+     *
      * @return string
      */
     public function getRealIp(bool $safeMode = true): string
@@ -232,6 +257,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Url
+     *
      * @return string
      */
     public function url(): string
@@ -241,6 +267,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * FullUrl
+     *
      * @return string
      */
     public function fullUrl(): string
@@ -250,6 +277,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * IsAjax
+     *
      * @return bool
      */
     public function isAjax(): bool
@@ -259,6 +287,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * IsGet
+     *
      * @return bool
      */
     public function isGet(): bool
@@ -269,6 +298,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * IsPost
+     *
      * @return bool
      */
     public function isPost(): bool
@@ -279,6 +309,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * IsPjax
+     *
      * @return bool
      */
     public function isPjax(): bool
@@ -288,6 +319,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * ExpectsJson
+     *
      * @return bool
      */
     public function expectsJson(): bool
@@ -297,6 +329,7 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * AcceptJson
+     *
      * @return bool
      */
     public function acceptJson(): bool
@@ -306,7 +339,9 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * IsIntranetIp
+     *
      * @param string $ip
+     *
      * @return bool
      */
     public static function isIntranetIp(string $ip): bool
@@ -345,8 +380,10 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Set get.
+     *
      * @param array|string $input
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return Request
      */
     public function setGet(array|string $input, mixed $value = null): Request
@@ -363,8 +400,10 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Set post.
+     *
      * @param array|string $input
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return Request
      */
     public function setPost(array|string $input, mixed $value = null): Request
@@ -381,8 +420,10 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * Set header.
+     *
      * @param array|string $input
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return Request
      */
     public function setHeader(array|string $input, mixed $value = null): Request
@@ -409,8 +450,10 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * 生成请求令牌
+     *
      * @param string $name 令牌名称
      * @param string $type 令牌生成方法
+     *
      * @return string
      * @throws Exception
      */
@@ -425,9 +468,12 @@ class Request extends \Workerman\Protocols\Http\Request
 
     /**
      * 检查请求令牌
+     *
      * @access public
+     *
      * @param string $token 令牌名称
-     * @param array $data 表单数据
+     * @param array  $data  表单数据
+     *
      * @return bool
      * @throws Exception
      */
