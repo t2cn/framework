@@ -43,10 +43,10 @@
     "illuminate/events": "^11.38",
     "illuminate/redis": "^11.38",
     "symfony/cache": "^7.2",
-    "twig/twig": "^3.18"
+    "twig/twig": "^3.18",
+    "ext-zend-opcache": "*"
   },
   "require-dev": {
-    "ext-zend-opcache": "*",
     "laravel/serializable-closure": "^2.0",
     "symfony/var-dumper": ">=4.2"
   },

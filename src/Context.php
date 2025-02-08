@@ -15,110 +15,20 @@ declare(strict_types=1);
 
 namespace T2;
 
-use Fiber;
-use SplObjectStorage;
-use StdClass;
-use WeakMap;
-use Workerman\Events\Revolt;
-use Workerman\Worker;
-use function property_exists;
+use stdClass;
+use Workerman\Coroutine\Context as WorkermanContext;
+use Workerman\Coroutine\Utils\DestructionWatcher;
+use Closure;
 
-class Context
+class Context extends WorkermanContext
 {
-    /**
-     * @var SplObjectStorage|WeakMap
-     */
-    protected static $objectStorage;
-
-    /**
-     * @var StdClass
-     */
-    protected static $object;
-
-
-    /**
-     * @return void
-     */
-    public static function init()
+    public static function onDestroy(Closure $closure): void
     {
-        if (!static::$objectStorage) {
-            static::$objectStorage = class_exists(WeakMap::class) ? new WeakMap() : new SplObjectStorage();
-            static::$object        = new StdClass;
+        $obj = static::get('context.onDestroy');
+        if (!$obj) {
+            $obj = new stdClass();
+            static::set('context.onDestroy', $obj);
         }
-    }
-
-    /**
-     * @return StdClass
-     */
-    protected static function getObject(): StdClass
-    {
-        $key = static::getKey();
-        if (!isset(static::$objectStorage[$key])) {
-            static::$objectStorage[$key] = new StdClass;
-        }
-        return static::$objectStorage[$key];
-    }
-
-    /**
-     * @return mixed
-     */
-    protected static function getKey()
-    {
-        return match (Worker::$eventLoopClass) {
-            Revolt::class => Fiber::getCurrent(),
-            default       => static::$object,
-        };
-    }
-
-    /**
-     * @param string|null $key
-     * @return mixed
-     */
-    public static function get(?string $key = null)
-    {
-        $obj = static::getObject();
-        if ($key === null) {
-            return $obj;
-        }
-        return $obj->$key ?? null;
-    }
-
-    /**
-     * @param string $key
-     * @param $value
-     * @return void
-     */
-    public static function set(string $key, $value): void
-    {
-        $obj       = static::getObject();
-        $obj->$key = $value;
-    }
-
-    /**
-     * @param string $key
-     * @return void
-     */
-    public static function delete(string $key): void
-    {
-        $obj = static::getObject();
-        unset($obj->$key);
-    }
-
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public static function has(string $key): bool
-    {
-        $obj = static::getObject();
-        return property_exists($obj, $key);
-    }
-
-    /**
-     * @return void
-     */
-    public static function destroy(): void
-    {
-        unset(static::$objectStorage[static::getKey()]);
+        DestructionWatcher::watch($obj, $closure);
     }
 }
